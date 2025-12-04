@@ -1,0 +1,133 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 5
+
+class Queue {
+    int arr[MAX];
+    int front, rear;
+
+public:
+    Queue() {
+        front = -1;
+        rear = -1;
+    }
+
+    bool isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    bool isFull() {
+        return (rear == MAX - 1);
+    }
+
+    void enqueue(int value) {
+        if (isFull()) {
+            cout << "Queue Overflow! Cannot enqueue " << value << endl;
+        } else if (isEmpty()) {
+            front = rear = 0;
+            arr[rear] = value;
+            cout << value << " enqueued to queue" << endl;
+        } else {
+            rear++;
+            arr[rear] = value;
+            cout << value << " enqueued to queue" << endl;
+        }
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue Underflow! Cannot dequeue" << endl;
+        } else if (front == rear) {
+            cout << arr[front] << " dequeued from queue" << endl;
+            front = rear = -1;
+        } else {
+            cout << arr[front] << " dequeued from queue" << endl;
+            front++;
+        }
+    }
+
+    void peek() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+        } else {
+            cout << "Front element is: " << arr[front] << endl;
+        }
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+        } else {
+            cout << "Queue elements (front to rear): ";
+            for (int i = front; i <= rear; i++) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+void displayMenu() {
+    cout << "1. Enqueue" << endl;
+    cout << "2. Dequeue" << endl;
+    cout << "3. Check if Queue is Empty" << endl;
+    cout << "4. Check if Queue is Full" << endl;
+    cout << "5. Display Queue" << endl;
+    cout << "6. Peek (View Front Element)" << endl;
+    cout << "7. Exit" << endl;
+    cout << "Enter your choice: ";
+}
+
+int main() {
+    Queue q;
+    int choice, value;
+    
+    do {
+        displayMenu();
+        cin >> choice;
+        
+        switch(choice) {
+            case 1:
+                cout << "Enter value to enqueue: ";
+                cin >> value;
+                q.enqueue(value);
+                break;
+                
+            case 2:
+                q.dequeue();
+                break;
+                
+            case 3:
+                if (q.isEmpty())
+                    cout << "Queue is EMPTY" << endl;
+                else
+                    cout << "Queue is NOT EMPTY" << endl;
+                break;
+                
+            case 4:
+                if (q.isFull())
+                    cout << "Queue is FULL" << endl;
+                else
+                    cout << "Queue is NOT FULL" << endl;
+                break;
+                
+            case 5:
+                q.display();
+                break;
+                
+            case 6:
+                q.peek();
+                break;
+                
+            case 7:
+                cout << "Exiting program..." << endl;
+                break;
+                
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while(choice != 7);
+    
+    return 0;
+}
